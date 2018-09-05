@@ -102,18 +102,18 @@ public:
     static bool           use_SSL;
     static bool           use_cert_file;
     static bool           use_proxy;
-    static const char*    cert_file;
-    static const char*    cert_dir;
-    static const char*    controller_host;
-    static const char*    app_name;
-    static const char*    tier_name;
-    static const char*    node_name;
-    static const char*    acct_name;
-    static const char*    access_key;
-    static const char*    proxy_host;
-    static const char*    proxy_user;
-    static const char*    proxy_pswd;
-    static const char*    proxy_pswd_file;
+    static string    cert_file;
+    static string    cert_dir;
+    static string    controller_host;
+    static string    app_name;
+    static string    tier_name;
+    static string    node_name;
+    static string    acct_name;
+    static string    access_key;
+    static string    proxy_host;
+    static string    proxy_user;
+    static string    proxy_pswd;
+    static string    proxy_pswd_file;
 
 private:
     
@@ -243,18 +243,18 @@ public:
         use_SSL                = vm [ (useSSLToken.substr(0,                   useSSLToken.find(',')))].as<bool>();
         use_cert_file          = vm [ (useCertFileToken.substr(0,         useCertFileToken.find(',')))].as<bool>();
         use_proxy              = vm [ (useProxyToken.substr(0,               useProxyToken.find(',')))].as<bool>();
-        controller_host        = vm [ (cntrlHostToken.substr(0,             cntrlHostToken.find(',')))].as<string>().c_str();
-        app_name               = vm [ (appNameToken.substr(0,                 appNameToken.find(',')))].as<string>().c_str();
-        tier_name              = vm [ (tierNameToken.substr(0,               tierNameToken.find(',')))].as<string>().c_str();
-        node_name              = vm [ (nodeNameToken.substr(0,               nodeNameToken.find(',')))].as<string>().c_str();
-        acct_name              = vm [ (acctNameToken.substr(0,               acctNameToken.find(',')))].as<string>().c_str();
-        access_key             = vm [ (accessKeyToken.substr(0,             accessKeyToken.find(',')))].as<string>().c_str();
-        proxy_host             = vm [ (proxyHostToken.substr(0,             proxyHostToken.find(',')))].as<string>().c_str();
-        cert_file              = vm [ (certFileToken.substr(0,               certFileToken.find(',')))].as<string>().c_str();
-        cert_dir               = vm [ (certDirToken.substr(0,                 certDirToken.find(',')))].as<string>().c_str();
-        proxy_user             = vm [ (proxyUserToken.substr(0,             proxyUserToken.find(',')))].as<string>().c_str();
-        proxy_pswd             = vm [ (proxyPswdToken.substr(0,             proxyPswdToken.find(',')))].as<string>().c_str();
-        proxy_pswd_file        = vm [ (proxyFileToken.substr(0,             proxyFileToken.find(',')))].as<string>().c_str();
+        controller_host        = vm [ (cntrlHostToken.substr(0,             cntrlHostToken.find(',')))].as<string>();
+        app_name               = vm [ (appNameToken.substr(0,                 appNameToken.find(',')))].as<string>();
+        tier_name              = vm [ (tierNameToken.substr(0,               tierNameToken.find(',')))].as<string>();
+        node_name              = vm [ (nodeNameToken.substr(0,               nodeNameToken.find(',')))].as<string>();
+        acct_name              = vm [ (acctNameToken.substr(0,               acctNameToken.find(',')))].as<string>();
+        access_key             = vm [ (accessKeyToken.substr(0,             accessKeyToken.find(',')))].as<string>();
+        proxy_host             = vm [ (proxyHostToken.substr(0,             proxyHostToken.find(',')))].as<string>();
+        cert_file              = vm [ (certFileToken.substr(0,               certFileToken.find(',')))].as<string>();
+        cert_dir               = vm [ (certDirToken.substr(0,                 certDirToken.find(',')))].as<string>();
+        proxy_user             = vm [ (proxyUserToken.substr(0,             proxyUserToken.find(',')))].as<string>();
+        proxy_pswd             = vm [ (proxyPswdToken.substr(0,             proxyPswdToken.find(',')))].as<string>();
+        proxy_pswd_file        = vm [ (proxyFileToken.substr(0,             proxyFileToken.find(',')))].as<string>();
 
 
         if (use_cert_file)
@@ -315,29 +315,29 @@ public:
             }
 
             appd_config_set_init_timeout_ms(cfg, wait);
-            appd_config_set_app_name(cfg, app_name);
-            appd_config_set_tier_name(cfg, tier_name);
-            appd_config_set_node_name(cfg, node_name);
-            appd_config_set_controller_host(cfg, controller_host);
+            appd_config_set_app_name(cfg, app_name.c_str());
+            appd_config_set_tier_name(cfg, tier_name.c_str());
+            appd_config_set_node_name(cfg, node_name.c_str());
+            appd_config_set_controller_host(cfg, controller_host.c_str());
             appd_config_set_controller_port(cfg, controller_port);
-            appd_config_set_controller_account(cfg, acct_name);
-            appd_config_set_controller_access_key(cfg, access_key);
+            appd_config_set_controller_account(cfg, acct_name.c_str());
+            appd_config_set_controller_access_key(cfg, access_key.c_str());
             appd_config_set_controller_use_ssl(cfg, use_SSL);
             appd_config_set_logging_min_level(cfg, (enum appd_config_log_level) log_level);
 
             if (use_cert_file)
             {
-                appd_config_set_controller_certificate_file(cfg, cert_file);
-                appd_config_set_controller_certificate_dir( cfg, cert_dir);
+                appd_config_set_controller_certificate_file(cfg, cert_file.c_str());
+                appd_config_set_controller_certificate_dir( cfg, cert_dir.c_str());
             }
 
             if (use_proxy)
             {
-                appd_config_set_controller_http_proxy_host(         cfg, proxy_host);
+                appd_config_set_controller_http_proxy_host(         cfg, proxy_host.c_str());
                 appd_config_set_controller_http_proxy_port(         cfg, proxy_port & 0xFFFF);
-                appd_config_set_controller_http_proxy_username(     cfg, proxy_user);
-                appd_config_set_controller_http_proxy_password(     cfg, proxy_pswd);
-                appd_config_set_controller_http_proxy_password_file(cfg, proxy_pswd_file);
+                appd_config_set_controller_http_proxy_username(     cfg, proxy_user.c_str());
+                appd_config_set_controller_http_proxy_password(     cfg, proxy_pswd.c_str());
+                appd_config_set_controller_http_proxy_password_file(cfg, proxy_pswd_file.c_str());
             }
         }
 
@@ -396,18 +396,18 @@ bool           SDKTest::use_cert_file;
 bool           SDKTest::use_proxy;
 bool           SDKTest::noop_SDK;
 bool           SDKTest::use_SSL;
-const char*    SDKTest::cert_file;
-const char*    SDKTest::cert_dir;
-const char*    SDKTest::app_name;
-const char*    SDKTest::proxy_host;
-const char*    SDKTest::proxy_user;
-const char*    SDKTest::proxy_pswd;
-const char*    SDKTest::proxy_pswd_file;
-const char*    SDKTest::controller_host;
-const char*    SDKTest::acct_name;
-const char*    SDKTest::access_key;
-const char*    SDKTest::tier_name;
-const char*    SDKTest::node_name;
+string    SDKTest::cert_file;
+string    SDKTest::cert_dir;
+string    SDKTest::app_name;
+string    SDKTest::proxy_host;
+string    SDKTest::proxy_user;
+string    SDKTest::proxy_pswd;
+string    SDKTest::proxy_pswd_file;
+string    SDKTest::controller_host;
+string    SDKTest::acct_name;
+string    SDKTest::access_key;
+string    SDKTest::tier_name;
+string    SDKTest::node_name;
 
 appd_config*   SDKTest::cfg;
 
@@ -421,6 +421,7 @@ int main(int argc, char* argv[])
 
     // There are the command line options.  NOTE: They won't necessarily match the inifile options!!
     cmdline_opts.add_options()
+            (helpToken.c_str(),         po::bool_switch()->default_value(helpInit),          "")
             (noopSDKToken.c_str(),      po::bool_switch()->default_value(noopSDKInit),       "")
             (acctNameToken.c_str(),     po::value<string>()->default_value(acctNameInit),    "")
             (appNameToken.c_str(),      po::value<string>()->default_value(appNameInit),     "")
@@ -452,23 +453,29 @@ int main(int argc, char* argv[])
         po::positional_options_description p;
         po::store(po::command_line_parser(argc, argv).options(cmdline_opts).positional(p).run(), vm);
         po::notify(vm);
+
+        auto display_help =  vm [ (helpToken.substr(0,                 helpToken.find(',')))].as<bool>();
+        if (display_help)
+        {
+            cout << cmdline_opts << "\n";
+            return 1;
+        }
     }
     catch (const std::exception &e)
     {
         cerr << " " << e.what() << endl;
-        exit(FAIL_RC);
+        return FAIL_RC;
     }
 
     try
     {
-        SDKTest**             workerThreads = new SDKTest* [MAX_THREADS];
         boost::thread_group     workerThreadGroup;
     
         if (SDKTest::sdk_api_initialize() != true)
         {
             cerr  << "SDKTest::sdk_api_initialize() failed."
                   << endl;
-            exit(FAIL_RC);
+            return FAIL_RC;
         }
     
         cerr << "Creating " << SDKTest::threads << " worker threads, mainline will wait for them to complete." << endl;
@@ -476,8 +483,8 @@ int main(int argc, char* argv[])
         for (ULONG loop = 1; loop <= SDKTest::threads; loop++)
         {
             if (aborted_threads > 0 || interrupt_recvd == true) { break; }
-            workerThreads[loop] = new SDKTest(loop);
-            workerThreadGroup.create_thread(boost::bind(&SDKTest::execute, workerThreads[loop]));
+            SDKTest new_thread(loop);
+            workerThreadGroup.create_thread(boost::bind(&SDKTest::execute, &new_thread));
         }
     
         if (aborted_threads == 0 && interrupt_recvd != true) 
@@ -489,6 +496,7 @@ int main(int argc, char* argv[])
     catch (runtime_error&)
     {
         cerr  << "Program recieved external SIGNAL, exiting now." << endl;
+        return FAIL_RC;
     }
 
     if (SDKTest::noop_SDK)
@@ -520,7 +528,7 @@ int main(int argc, char* argv[])
          << " threads that aborted due to errors."
          << endl << endl;
 
-    exit(aborted_threads);
+    return aborted_threads;
 
 }
 
