@@ -475,8 +475,8 @@ int main(int argc, char* argv[])
         for (ULONG loop = 1; loop <= SDKTest::threads; loop++)
         {
             if (aborted_threads > 0 || interrupt_recvd == true) { break; }
-            SDKTest new_thread(loop);
-            workerThreadGroup.create_thread(boost::bind(&SDKTest::execute, &new_thread));
+            shared_ptr<SDKTest> new_thread = make_shared<SDKTest>(loop);
+            workerThreadGroup.create_thread(boost::bind(&SDKTest::execute, move(new_thread)));
         }
     
         if (aborted_threads == 0 && interrupt_recvd != true) 
